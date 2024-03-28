@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Weather App</title>
+</head>
+<body>
+    <fieldset>
+    	<legend>Weather App</legend>
+    	<br><br>
+    	<form>
+    		<label>City Name : </label>
+    		<input type="text" placeholder="City Name" id="cityName">
+    		<br><br>
+    	<table>
+    		<tr>
+    			<td>City Name : </td>
+    			<td id="city">Pune</td>
+    		</tr>
+    		<tr>
+    			<td>Temprature : </td>
+    			<td id="temp">27 degC</td>
+    		</tr>
+    		<tr>
+    		 <td>Humdity :</td>
+    		 <td id="hum">20%</td> 
+    	    </tr>
+            <tr>
+            	<td>Wind : </td>
+            	<td id="wind">8 km/hr</td>
+            </tr> 
+    	</table><br>
+    	<button type="button" onclick="fetchData()">FETCH</button>
+    </form>
+    </fieldset>
+    <script type="text/javascript">
+    	let apiKey = "b125994c1648c7219f2da5d1dc0fb891";
+    	let city = document.getElementById("city");
+    	let temp = document.getElementById("temp");
+    	let hum = document.getElementById("hum");
+    	let wind = document.getElementById("wind");
+
+    	function fetchData(){
+    		let cityName = document.getElementById("cityName").value;
+    		if (cityName !="") {
+    			fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`);
+    			.then(resp=>resp.json())
+    			.then(data=>{
+    				city.innerHTML = data.name;
+    				temp.innerHTML = ((data.main.temp)-273.15).toFixed(2)+" C";
+    				hum.innerHTML = data.main.humidity+"%";
+    				wind.innerHTML = data.wind.speed +"km/hr";
+    			})
+    		}else{
+    			alert("Enter a City Name ");
+    		}
+    	}
+    </script>
+</body>
+</html>
